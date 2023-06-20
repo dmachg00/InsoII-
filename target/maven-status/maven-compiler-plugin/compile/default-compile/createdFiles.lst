@@ -1,0 +1,14 @@
+EJB\PersonaFacadeLocal.class
+EJB\AbstractFacade.class
+EJB\UsuarioFacadeLocal.class
+modelo\Rol.class
+EJB\RolFacadeLocal.class
+EJB\UsuarioFacade.class
+modelo\Usuario_.class
+EJB\RolFacade.class
+modelo\Persona.class
+controlador\LoginController.class
+modelo\Persona_.class
+EJB\PersonaFacade.class
+modelo\Rol_.class
+modelo\Usuario.class
