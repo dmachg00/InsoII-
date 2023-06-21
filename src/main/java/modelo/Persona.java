@@ -1,25 +1,24 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 /**
  *
- * @author [tu nombre]
+ * @author Diego
  */
 @Entity
-@Table(name = "personas")
-public class Persona implements Serializable {
-
+@Table(name = "personas")   
+public class Persona {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPersona;
@@ -82,6 +81,14 @@ public class Persona implements Serializable {
     public void setDNI(String dni) {
         this.dni = dni;
     }
+    
+    public int getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
 
     public Date getFechaNacimiento() {
         return fechaNacimiento;
@@ -89,14 +96,6 @@ public class Persona implements Serializable {
 
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
-    
-     public int getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
     }
 
     @Override
@@ -107,8 +106,8 @@ public class Persona implements Serializable {
         hash = 67 * hash + Objects.hashCode(this.apellido1);
         hash = 67 * hash + Objects.hashCode(this.apellido2);
         hash = 67 * hash + Objects.hashCode(this.dni);
+        hash = 67 * hash + Objects.hashCode(this.telefono);
         hash = 67 * hash + Objects.hashCode(this.fechaNacimiento);
-        hash = 67 * hash + this.telefono;
         return hash;
     }
 
@@ -130,6 +129,10 @@ public class Persona implements Serializable {
         if (this.dni != other.dni) {
             return false;
         }
+    
+        if (telefono != telefono) {
+            return false;
+        }
         if (!Objects.equals(this.nombre, other.nombre)) {
             return false;
         }
@@ -144,5 +147,5 @@ public class Persona implements Serializable {
         }
         return true;
     }
-
+    
 }

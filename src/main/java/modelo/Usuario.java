@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package modelo;
 
 import java.io.Serializable;
@@ -6,15 +11,19 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
 
+/**
+ *
+ * @author Diego
+ */
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements Serializable {
-
-    @Id
+public class Usuario {
+    
+      @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUsuario;
     @Column(name = "NombreUsuario", unique = true)
-    private String user;
+    private String nombreUsuario;
     @Column(name = "Email", unique = true)
     private String email;
     @Column(name = "Contraseña")
@@ -28,17 +37,17 @@ public class Usuario implements Serializable {
     @ManyToOne
     @JoinColumn(name = "IdRol")
     private Rol rol;
+    
 
-  
     public int getIdUsuario() {
         return idUsuario;
     }
 
-    public String getUser() {
-        return user;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
     
-     public String getEmail() {
+    public String getEmail() {
         return email;
     }
 
@@ -49,6 +58,7 @@ public class Usuario implements Serializable {
     public Date getUltimaConexion() {
         return ultimaConexion;
     }
+
 
     public Persona getPersona() {
         return persona;
@@ -62,8 +72,12 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {
@@ -83,14 +97,11 @@ public class Usuario implements Serializable {
         this.rol = rol;
     }
 
-   
-    
-
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 17 * hash + this.idUsuario;
-        hash = 17 * hash + Objects.hashCode(this.user);
+        hash = 17 * hash + Objects.hashCode(this.nombreUsuario);
         hash = 17 * hash + Objects.hashCode(this.email);
         hash = 17 * hash + Objects.hashCode(this.password);
         hash = 17 * hash + Objects.hashCode(this.ultimaConexion);
@@ -114,7 +125,8 @@ public class Usuario implements Serializable {
         if (this.idUsuario != other.idUsuario) {
             return false;
         }
-        if (!Objects.equals(this.user, other.user)) {
+     
+        if (!Objects.equals(this.nombreUsuario, other.nombreUsuario)) {
             return false;
         }
         if (!Objects.equals(this.email, other.email)) {
@@ -134,5 +146,5 @@ public class Usuario implements Serializable {
         }
         return true;
     }
-
+    
 }

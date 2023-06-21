@@ -30,12 +30,4 @@ public interface UsuarioFacadeLocal {
 
     int count();
     
-    List<Usuario> findUsuarioType(int rol);
-    
-    Usuario findUsuario(int id);
-            
-    Usuario verificarUsuario(Usuario us);
-    
-    Usuario obtenerUsuarioActual();
-    
 }

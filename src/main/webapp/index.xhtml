@@ -15,7 +15,7 @@
                     <h:outputLabel for="username" value="Username:" />
                     <p:inputText id="username" value="#{loginController.nombreUsuario}" />
                     <h:outputLabel for="password" value="Password:" />
-                    <p:password id="password"  value="#{LoginController.contraseña}" />
+                    <p:password id="password"  value="#{loginController.contraseña}" />
                 </h:panelGrid>      
                 <p:messages id="messages" showDetail="true"/>
                 <p:commandButton value="Login" action="#{loginController.verificarUsuario()}" update="messages" style="margin-right: 10px;" />

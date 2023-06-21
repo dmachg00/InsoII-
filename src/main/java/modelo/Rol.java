@@ -1,14 +1,15 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package modelo;
 
+
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  *
@@ -16,14 +17,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "roles")
-public class Rol implements Serializable {
-
-    @Id
+public class Rol {
+    
+      @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idRol;
-    @Column(name = "tipoUsuario")
+    @Column(name = "TipoUsuario")
     private char tipoUsuario;
-    @Column(name = "descripcion")
+    @Column(name = "Descripcion")
     private String descripcion;
 
     public int getIdRol() {
@@ -84,3 +85,6 @@ public class Rol implements Serializable {
     }
 
 }
+
+
+
