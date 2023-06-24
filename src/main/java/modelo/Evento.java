@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -24,7 +25,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "eventos")   
-public class Evento {
+public class Evento implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,17 +96,16 @@ public class Evento {
    public void setOrganizador (Organizador organizador){
        this.organizador = organizador;
    }
-   
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + this.idEvento;
-        hash = 67 * hash + Objects.hashCode(this.nombre);
-        hash = 67 * hash + Objects.hashCode(this.descripcion);
-        hash = 67 * hash + Objects.hashCode(this.direccion);
-        hash = 67 * hash + Objects.hashCode(this.telefono);
-        hash = 17 * hash + Objects.hashCode(this.organizador);
+        int hash = 3;
+        hash = 61 * hash + this.idEvento;
+        hash = 61 * hash + Objects.hashCode(this.nombre);
+        hash = 61 * hash + Objects.hashCode(this.descripcion);
+        hash = 61 * hash + Objects.hashCode(this.direccion);
+        hash = 61 * hash + this.telefono;
+        hash = 61 * hash + Objects.hashCode(this.organizador);
         return hash;
     }
 
@@ -124,17 +124,16 @@ public class Evento {
         if (this.idEvento != other.idEvento) {
             return false;
         }
-    
-        if (telefono != telefono) {
+        if (this.telefono != other.telefono) {
             return false;
         }
         if (!Objects.equals(this.nombre, other.nombre)) {
             return false;
         }
-        if (!Objects.equals(this.direccion, other.direccion)) {
+        if (!Objects.equals(this.descripcion, other.descripcion)) {
             return false;
         }
-        if (!Objects.equals(this.descripcion, other.descripcion)) {
+        if (!Objects.equals(this.direccion, other.direccion)) {
             return false;
         }
         if (!Objects.equals(this.organizador, other.organizador)) {
@@ -142,5 +141,8 @@ public class Evento {
         }
         return true;
     }
+   
+
+   
     
 }

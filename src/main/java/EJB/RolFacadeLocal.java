@@ -24,7 +24,9 @@ public interface RolFacadeLocal {
 
     Rol find(Object id);
 
-    List<Rol> findAll();
+    List<Rol> findAllRoles();
+    
+    Rol findRol(char tipo);
 
     List<Rol> findRange(int[] range);
 

@@ -60,12 +60,13 @@ public class Asistencia implements Serializable {
      
         this.usuarios=usuario;
     }
-    
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.evento);
+        hash = 29 * hash + Objects.hashCode(this.usuarios);
         return hash;
     }
 
@@ -84,8 +85,17 @@ public class Asistencia implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
+        if (!Objects.equals(this.evento, other.evento)) {
+            return false;
+        }
+        if (!Objects.equals(this.usuarios, other.usuarios)) {
+            return false;
+        }
         return true;
     }
+    
+    
+    
 
     public static class AsistenciaID implements Serializable {
 
@@ -113,9 +123,7 @@ public class Asistencia implements Serializable {
 
         @Override
         public int hashCode() {
-            int hash = 7;
-            hash = 59 * hash + this.idEvento;
-            hash = 59 * hash + this.idUsuario;
+            int hash = 5;
             return hash;
         }
 
@@ -139,6 +147,7 @@ public class Asistencia implements Serializable {
             }
             return true;
         }
+
     }
 }
     

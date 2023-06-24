@@ -4,24 +4,45 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
+<h:head>
+    <title>Iniciar sesión</title>
+    <style>
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+
+        .register-link {
+            font-size: 12px;
+            margin-top: 10px;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="login-container">
+        <img class="logo" src="ruta_del_logo" alt="Logo de la aplicación" />
+
         <h:form>
+            <h:outputLabel for="username" value="Usuario:" />
+            <p:inputText id="username" value="#{loginBean.username}" required="true" />
 
-            <p:panel header="Login">
-                <h:panelGrid columns="2" >
-                    <h:outputLabel for="username" value="Username:" />
-                    <p:inputText id="username" value="#{loginController.nombreUsuario}" />
-                    <h:outputLabel for="password" value="Password:" />
-                    <p:password id="password"  value="#{loginController.contraseña}" />
-                </h:panelGrid>      
-                <p:messages id="messages" showDetail="true"/>
-                <p:commandButton value="Login" action="#{loginController.verificarUsuario()}" update="messages" style="margin-right: 10px;" />
-                <p:commandButton value="Register" action="publico/registerUsuario.xhtml?faces-redirect=true"  style="margin-left: 10px;"/>
-            </p:panel>
+            <h:outputLabel for="password" value="Contraseña:" />
+            <p:password id="password" value="#{loginBean.password}" required="true" />
 
+            <p:commandButton value="Iniciar sesión" action="#{loginBean.login}" />
+
+            <h:outputText value="¿No tienes una cuenta?" />
+            <a class="register-link" href="#">Regístrate aquí</a>
         </h:form>
-    </h:body>
+    </div>
+</h:body>
 </html>

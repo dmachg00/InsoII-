@@ -17,7 +17,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "usuarios")
-public class Usuario {
+public class Usuario implements Serializable{
     
       @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,14 +99,14 @@ public class Usuario {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 17 * hash + this.idUsuario;
-        hash = 17 * hash + Objects.hashCode(this.nombreUsuario);
-        hash = 17 * hash + Objects.hashCode(this.email);
-        hash = 17 * hash + Objects.hashCode(this.password);
-        hash = 17 * hash + Objects.hashCode(this.ultimaConexion);
-        hash = 17 * hash + Objects.hashCode(this.persona);
-        hash = 17 * hash + Objects.hashCode(this.rol);
+        int hash = 7;
+        hash = 71 * hash + this.idUsuario;
+        hash = 71 * hash + Objects.hashCode(this.nombreUsuario);
+        hash = 71 * hash + Objects.hashCode(this.email);
+        hash = 71 * hash + Objects.hashCode(this.password);
+        hash = 71 * hash + Objects.hashCode(this.ultimaConexion);
+        hash = 71 * hash + Objects.hashCode(this.persona);
+        hash = 71 * hash + Objects.hashCode(this.rol);
         return hash;
     }
 
@@ -125,7 +125,6 @@ public class Usuario {
         if (this.idUsuario != other.idUsuario) {
             return false;
         }
-     
         if (!Objects.equals(this.nombreUsuario, other.nombreUsuario)) {
             return false;
         }
@@ -146,5 +145,7 @@ public class Usuario {
         }
         return true;
     }
+
+    
     
 }

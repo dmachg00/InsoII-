@@ -91,12 +91,12 @@ public class Menu implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 89 * hash + this.idMenu;
-        hash = 89 * hash + Objects.hashCode(this.nombre);
-        hash = 89 * hash + Objects.hashCode(this.tipo);
-        hash = 89 * hash + Objects.hashCode(this.rol);
-        hash = 89 * hash + Objects.hashCode(this.menu_Padre);
-        hash = 89 * hash + Objects.hashCode(this.url);
+        hash = 67 * hash + this.idMenu;
+        hash = 67 * hash + Objects.hashCode(this.nombre);
+        hash = 67 * hash + Objects.hashCode(this.tipo);
+        hash = 67 * hash + Objects.hashCode(this.rol);
+        hash = 67 * hash + Objects.hashCode(this.menu_Padre);
+        hash = 67 * hash + Objects.hashCode(this.url);
         return hash;
     }
 
@@ -115,14 +115,13 @@ public class Menu implements Serializable {
         if (this.idMenu != other.idMenu) {
             return false;
         }
-      
         if (!Objects.equals(this.nombre, other.nombre)) {
             return false;
         }
-        if (this.tipo != other.tipo) {
+        if (!Objects.equals(this.url, other.url)) {
             return false;
         }
-        if (!Objects.equals(this.url, other.url)) {
+        if (this.tipo != other.tipo) {
             return false;
         }
         if (!Objects.equals(this.rol, other.rol)) {
@@ -133,6 +132,8 @@ public class Menu implements Serializable {
         }
         return true;
     }
+
+    
 
     public enum TipoMenu {
         P,H

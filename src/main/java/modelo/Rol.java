@@ -17,7 +17,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "roles")
-public class Rol {
+public class Rol implements Serializable{
     
       @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +53,7 @@ public class Rol {
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 3;
         hash = 29 * hash + this.idRol;
         hash = 29 * hash + this.tipoUsuario;
         hash = 29 * hash + Objects.hashCode(this.descripcion);
@@ -83,6 +83,8 @@ public class Rol {
         }
         return true;
     }
+
+    
 
 }
 

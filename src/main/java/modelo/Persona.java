@@ -17,7 +17,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "personas")   
-public class Persona {
+public class Persona implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -101,13 +101,13 @@ public class Persona {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + this.idPersona;
-        hash = 67 * hash + Objects.hashCode(this.nombre);
-        hash = 67 * hash + Objects.hashCode(this.apellido1);
-        hash = 67 * hash + Objects.hashCode(this.apellido2);
-        hash = 67 * hash + Objects.hashCode(this.dni);
-        hash = 67 * hash + Objects.hashCode(this.telefono);
-        hash = 67 * hash + Objects.hashCode(this.fechaNacimiento);
+        hash = 59 * hash + this.idPersona;
+        hash = 59 * hash + Objects.hashCode(this.nombre);
+        hash = 59 * hash + Objects.hashCode(this.apellido1);
+        hash = 59 * hash + Objects.hashCode(this.apellido2);
+        hash = 59 * hash + Objects.hashCode(this.dni);
+        hash = 59 * hash + this.telefono;
+        hash = 59 * hash + Objects.hashCode(this.fechaNacimiento);
         return hash;
     }
 
@@ -126,11 +126,7 @@ public class Persona {
         if (this.idPersona != other.idPersona) {
             return false;
         }
-        if (this.dni != other.dni) {
-            return false;
-        }
-    
-        if (telefono != telefono) {
+        if (this.telefono != other.telefono) {
             return false;
         }
         if (!Objects.equals(this.nombre, other.nombre)) {
@@ -142,10 +138,15 @@ public class Persona {
         if (!Objects.equals(this.apellido2, other.apellido2)) {
             return false;
         }
+        if (!Objects.equals(this.dni, other.dni)) {
+            return false;
+        }
         if (!Objects.equals(this.fechaNacimiento, other.fechaNacimiento)) {
             return false;
         }
         return true;
     }
+
+    
     
 }

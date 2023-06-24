@@ -17,7 +17,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "administrador")
-public class Administrador {
+public class Administrador implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,14 +64,14 @@ public class Administrador {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
-    
-     @Override
+
+    @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 17 * hash + this.idAdministrador;
-        hash = 17 * hash + Objects.hashCode(this.usuario);
-        hash = 17 * hash + Objects.hashCode(this.password);
-        hash = 17 * hash + Objects.hashCode(this.rol);
+        int hash = 3;
+        hash = 79 * hash + this.idAdministrador;
+        hash = 79 * hash + Objects.hashCode(this.usuario);
+        hash = 79 * hash + Objects.hashCode(this.password);
+        hash = 79 * hash + Objects.hashCode(this.rol);
         return hash;
     }
 
@@ -90,19 +90,18 @@ public class Administrador {
         if (this.idAdministrador != other.idAdministrador) {
             return false;
         }
-     
         if (!Objects.equals(this.usuario, other.usuario)) {
             return false;
         }
-       
         if (!Objects.equals(this.password, other.password)) {
             return false;
         }
-       
         if (!Objects.equals(this.rol, other.rol)) {
             return false;
         }
         return true;
     }
+    
+    
     
 }

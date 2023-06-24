@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "gustos")
-public class Gusto {
+public class Gusto implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,9 +57,9 @@ public class Gusto {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + this.idGusto;
-        hash = 29 * hash + Objects.hashCode(this.nombre);
-        hash = 29 * hash + Objects.hashCode(this.descripcion);
+        hash = 19 * hash + this.idGusto;
+        hash = 19 * hash + Objects.hashCode(this.nombre);
+        hash = 19 * hash + Objects.hashCode(this.descripcion);
         return hash;
     }
 
@@ -77,7 +78,7 @@ public class Gusto {
         if (this.idGusto != other.idGusto) {
             return false;
         }
-        if (this.nombre != other.nombre) {
+        if (!Objects.equals(this.nombre, other.nombre)) {
             return false;
         }
         if (!Objects.equals(this.descripcion, other.descripcion)) {
@@ -85,5 +86,7 @@ public class Gusto {
         }
         return true;
     }
+
+    
 
 }
