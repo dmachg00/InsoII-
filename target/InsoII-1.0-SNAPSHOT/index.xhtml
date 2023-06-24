@@ -4,45 +4,90 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
-    <title>Iniciar sesión</title>
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
     <style>
-        .login-container {
+        body {
+
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            margin: 0;
+        }
+        .login-panel {
+            color: black;
+            padding: 50px;
+            text-align: center;
+
+        }
+        .button {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: black;
+            border: none;
+            color: white;
+            text-align: center;
+            font-size: 10px;
+            padding: 2px;
+            width: 75px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
         }
 
-        .logo {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 20px;
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
         }
 
-        .register-link {
-            font-size: 12px;
-            margin-top: 10px;
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .button:hover span {
+            padding-right: 25px;
+        }
+
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
         }
     </style>
-</h:head>
-<h:body>
-    <div class="login-container">
-        <img class="logo" src="ruta_del_logo" alt="Logo de la aplicación" />
-
+    <h:body>
         <h:form>
-            <h:outputLabel for="username" value="Usuario:" />
-            <p:inputText id="username" value="#{loginBean.username}" required="true" />
+            <div class="login-panel">   
+                <p:panel header="Eventalia">
+                    <h:panelGrid columns="2"  style="align-content:center" >
+                        <h:outputLabel for="username" value="Username:" />
+                        <p:inputText id="username" value="#{indexController.nombreUsuario}"  />
 
-            <h:outputLabel for="password" value="Contraseña:" />
-            <p:password id="password" value="#{loginBean.password}" required="true" />
 
-            <p:commandButton value="Iniciar sesión" action="#{loginBean.login}" />
+                        <h:outputLabel for="password" value="Password:" />
+                        <p:password id="password"  value="#{indexController.contraseña}" />
 
-            <h:outputText value="¿No tienes una cuenta?" />
-            <a class="register-link" href="#">Regístrate aquí</a>
+
+
+                    </h:panelGrid> 
+                    
+                    <br></br>
+                    <p:messages id="messages" showDetail="true"/>
+                    <p:commandButton value="Login" action="#{indexController.verificarUsuario()}" update="messages" styleClass="button" />
+                    <br>
+                        
+                    </br>
+                    <p:outputLabel value="¿No tienes una cuenta?" />
+                    <h:outputLink value="registro.xhtml"><br></br>Registrarme</h:outputLink>
+                </p:panel>
+            </div>
         </h:form>
-    </div>
-</h:body>
+    </h:body>
 </html>

@@ -6,9 +6,12 @@
 package EJB;
 
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
+import javax.faces.context.FacesContext;
+import javax.persistence.*;
 import javax.persistence.PersistenceContext;
+import modelo.Rol;
 import modelo.Usuario;
 
 /**
@@ -25,6 +28,9 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     protected EntityManager getEntityManager() {
         return em;
     }
+    
+    @EJB
+    private RolFacadeLocal rolEJB;
 
     public UsuarioFacade() {
         super(Usuario.class);
@@ -32,22 +38,44 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
 
     @Override
     public List<Usuario> findUsuarioType(char rol) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Rol aux = rolEJB.findRol(rol);
+        String consulta = "FROM Usuario u WHERE u.rol.idRol=:param1";
+        Query query = em.createQuery(consulta);
+        query.setParameter("param1", aux.getIdRol());
+        List<Usuario> resultado = query.getResultList();
+        return resultado; //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Usuario findUsuario(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String consulta = "FROM Usuario u WHERE u.idUsuario = :param1";
+        Query query = em.createQuery(consulta);
+        query.setParameter("param1", id);
+        List<Usuario> resultado = query.getResultList();
+        return resultado.get(0); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Usuario verificarUsuario(Usuario us) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Usuario verificarUsuario(Usuario usuario) {
+        String consulta = "FROM Usuario u WHERE u.user=:param1 and u.password=:param2";
+        Query query = em.createQuery(consulta);
+        query.setParameter("param1", usuario.getNombreUsuario());
+        query.setParameter("param2", usuario.getPassword());
+        List<Usuario> resultado = query.getResultList();
+        if (resultado != null && !resultado.isEmpty()) {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", resultado.get(0));
+            return resultado.get(0); // Devuelve el primer resultado encontrado
+        } else {
+            return null; // Devuelve null si no hay coincidencia en base de datos
+        } //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Usuario obtenerUsuarioActual() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+
+        return usuario;
+    } //To change body of generated methods, choose Tools | Templates.
     }
     
-}

@@ -29,5 +29,14 @@ public interface OrganizadorFacadeLocal {
     List<Organizador> findRange(int[] range);
 
     int count();
+  
+    List<Organizador> findOrganizadorType(char rol);
+    
+    Organizador findOrganizador(int id);
+            
+    Organizador verificarOrganizador(Organizador organizador);
+    
+    Organizador obtenerOrganizadorActual();
+
     
 }

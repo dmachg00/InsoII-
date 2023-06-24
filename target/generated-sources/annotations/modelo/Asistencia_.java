@@ -7,7 +7,7 @@ import modelo.Asistencia.AsistenciaID;
 import modelo.Evento;
 import modelo.Usuario;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2023-06-21T19:46:11")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2023-06-24T18:02:33")
 @StaticMetamodel(Asistencia.class)
 public class Asistencia_ { 
 
