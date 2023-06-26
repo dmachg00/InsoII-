@@ -48,7 +48,6 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
 
     @Override
     public Usuario findUsuario(int id) {
-        
         String consulta = "FROM Usuario u WHERE u.idUsuario = :param1";
         Query query = em.createQuery(consulta);
         query.setParameter("param1", id);
@@ -74,8 +73,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     @Override
     public Usuario obtenerUsuarioActual() {
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-
         return usuario;
     } //To change body of generated methods, choose Tools | Templates.
-    }
+}
     

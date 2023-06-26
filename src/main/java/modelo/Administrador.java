@@ -30,7 +30,7 @@ public class Administrador implements Serializable{
     @JoinColumn(name = "IdRol")
     private Rol rol;
     
-     public int getIdAdmin() {
+    public int getIdAdmin() {
         return idAdministrador;
     }
 

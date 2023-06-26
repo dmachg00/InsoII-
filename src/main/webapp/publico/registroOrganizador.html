@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    
+    <h:body>
+        <h:form>
+            <h1>Registro Organizador</h1> 
+            <p:messages />
+
+            <p:fieldset legend="Datos personales">
+                <p:panelGrid columns="2">
+                    <p:outputLabel for="name" value="Nombre:" />
+                    <p:inputText id="name" required="true"  value="#{RegisterController.usuario.persona.nombre}">
+                        <p:message for="name" />
+
+                    </p:inputText>
+
+                    <p:outputLabel for="firstSurname" value="Primer Apellido:" />
+                    <p:inputText id="firstSurname" required="true"  value="#{RegisterController.usuario.persona.apellido1}">
+                        <p:message for="firstSurname" />
+                    </p:inputText>
+
+
+                    <p:outputLabel for="secondSurname" value="Segundo Apellido:" />
+                    <p:inputText id="secondSurname" required="true" value="#{RegisterController.usuario.persona.apellido2}">
+                        <p:message for="secondSurname" />
+                    </p:inputText>
+
+                    <p:outputLabel for="gender" value="Género"/>
+                    <p:selectOneButton id="gender" required="true" value="#{RegisterController.usuario.persona.sexo}">
+                        <f:selectItem itemLabel="Hombre" itemValue='M' />
+                        <f:selectItem itemLabel="Mujer" itemValue='F' />
+                        <p:message for="gender" />
+                    </p:selectOneButton>
+
+                    <p:outputLabel for="dateOfBirth" value="Fecha de nacimiento:" />
+                    <p:calendar id="dateOfBirth" required="true" value="#{RegisterController.usuario.persona.fechaNacimiento}">
+                        <p:message for="dateOfBirth" />
+                    </p:calendar>
+
+                </p:panelGrid>
+            </p:fieldset>
+
+            <p:fieldset legend="Datos de acceso">
+                <p:panelGrid columns="2">
+                    <p:outputLabel for="email" value="Nombre de Usuario:" />
+                    <p:inputText id="email" required="true" value="#{RegisterController.usuario.user}">
+                        <p:message for="email" />
+                    </p:inputText>
+
+                    <p:outputLabel for="password" value="Contraseña:" />
+                    <p:password id="password" required="true" value="#{RegisterController.password1}">
+                        <p:message for="password" />
+                    </p:password>
+                    <p:outputLabel for="confirmPassword" value="Confirmar contraseña:" />
+                    <p:password id="confirmPassword" required="true" value="#{RegisterController.password2}">
+                        <p:message for="confirmPassword" />
+                    </p:password>
+
+                    <p:outputLabel for="role" value="Rol:" />
+                    <p:outputLabel id="role"  value="Organizador"/>
+
+                </p:panelGrid>
+            </p:fieldset>
+            <p>
+                <h:commandButton value="Registrar" action="#{RegisterController.insertarOrganizador()}"/>
+            </p>
+        </h:form>
+    </h:body>
+</html>

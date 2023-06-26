@@ -5,14 +5,18 @@
  */
 package EJB;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import modelo.Menu;
+import modelo.Usuario;
 
 /**
  *
- * @author Diego
+ * @author mtrasl
  */
 @Stateless
 public class MenuFacade extends AbstractFacade<Menu> implements MenuFacadeLocal {
@@ -29,4 +33,11 @@ public class MenuFacade extends AbstractFacade<Menu> implements MenuFacadeLocal 
         super(Menu.class);
     }
     
+    public List<Menu> obtenerMenuUsuario(Usuario usuario) {
+        String consulta = "FROM Menu m WHERE m.rol=:param1";
+        Query query = em.createQuery(consulta);
+        query.setParameter("param1", usuario.getRol());
+        List<Menu> resultado = query.getResultList();
+        return resultado; // Devuelve el primer resultado encontrado
+    }
 }

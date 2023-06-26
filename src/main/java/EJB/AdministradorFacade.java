@@ -5,14 +5,17 @@
  */
 package EJB;
 
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
+import javax.faces.context.FacesContext;
+import javax.persistence.*;
 import javax.persistence.PersistenceContext;
 import modelo.Administrador;
 
 /**
  *
- * @author Diego
+ * @author mtrasl
  */
 @Stateless
 public class AdministradorFacade extends AbstractFacade<Administrador> implements AdministradorFacadeLocal {

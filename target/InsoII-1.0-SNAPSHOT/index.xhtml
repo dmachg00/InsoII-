@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Inicio de sesión</title>
     </h:head>
     <style>
         body {
@@ -68,24 +68,21 @@
                 <p:panel header="Eventalia">
                     <h:panelGrid columns="2"  style="align-content:center" >
                         <h:outputLabel for="username" value="Username:" />
-                        <p:inputText id="username" value="#{indexController.nombreUsuario}"  />
-
+                        <p:inputText id="username" value="#{LoginController.nombreUsuario}"  />
 
                         <h:outputLabel for="password" value="Password:" />
-                        <p:password id="password"  value="#{indexController.contraseña}" />
-
-
-
+                        <p:password id="password"  value="#{LoginController.contraseña}" />
+                        
                     </h:panelGrid> 
                     
                     <br></br>
                     <p:messages id="messages" showDetail="true"/>
-                    <p:commandButton value="Login" action="#{indexController.verificarUsuario()}" update="messages" styleClass="button" />
+                    <p:commandButton value="Login" action="#{LoginController.verificarUsuario()}" update="messages" styleClass="button" />
                     <br>
                         
                     </br>
                     <p:outputLabel value="¿No tienes una cuenta?" />
-                    <h:outputLink value="registro.xhtml"><br></br>Registrarme</h:outputLink>
+                    <h:outputLink value="registro.xhtml"><br></br>Registrarme</h:outputLink>                
                 </p:panel>
             </div>
         </h:form>

@@ -11,46 +11,43 @@ import javax.persistence.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 /**
  *
- * @author mtrasl
+ * @author mtras
  */
 @Entity
-@Table(name = "gustosusuario")
-public class GustoUsuario implements Serializable {
-
-    
+@Table(name = "gustosevento")
+public class GustoEvento implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idGustosUsuario;
+    private int idGustoEvento;
     
     @ManyToOne
-    @JoinColumn(name = "idUsuario", foreignKey = @ForeignKey(name = "FK_gustosusuario_usuarios"))
-    private Usuario usuario;
+    @JoinColumn(name = "idEventos", foreignKey = @ForeignKey(name = "FK_gustosevento_eventos"))
+    private Evento evento;
 
     @ManyToOne
-    @JoinColumn(name = "idGusto", foreignKey = @ForeignKey(name = "FK_gustosusuario_gustos"))
+    @JoinColumn(name = "idGusto", foreignKey = @ForeignKey(name = "FK_gustosevento_gustos"))
     private Gusto gusto;
 
-    public int getIdGustosUsuario() {
-        return idGustosUsuario;
+    public int getIdGustosEvento() {
+        return idGustoEvento;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Evento getEvento() {
+        return evento;
     }
 
     public Gusto getGusto() {
         return gusto;
     }
 
-    public void setIdGustosUsuario(int idGustosUsuario) {
-        this.idGustosUsuario = idGustosUsuario;
+    public void setIdGustosEvento(int idGustosEvento) {
+        this.idGustoEvento = idGustosEvento;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setEvento(Evento evento) {
+        this.evento = evento;
     }
 
     public void setGusto(Gusto gusto) {
@@ -60,8 +57,8 @@ public class GustoUsuario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + this.idGustosUsuario;
-        hash = 67 * hash + Objects.hashCode(this.usuario);
+        hash = 67 * hash + this.idGustoEvento;
+        hash = 67 * hash + Objects.hashCode(this.evento);
         hash = 67 * hash + Objects.hashCode(this.gusto);
         return hash;
     }
@@ -77,11 +74,11 @@ public class GustoUsuario implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final GustoUsuario other = (GustoUsuario) obj;
-        if (this.idGustosUsuario != other.idGustosUsuario) {
+        final GustoEvento other = (GustoEvento) obj;
+        if (this.idGustoEvento != other.idGustoEvento) {
             return false;
         }
-        if (!Objects.equals(this.usuario, other.usuario)) {
+        if (!Objects.equals(this.evento, other.evento)) {
             return false;
         }
         if (!Objects.equals(this.gusto, other.gusto)) {
@@ -89,5 +86,4 @@ public class GustoUsuario implements Serializable {
         }
         return true;
     }
-    
 }

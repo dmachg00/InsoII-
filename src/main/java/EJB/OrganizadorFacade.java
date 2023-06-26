@@ -6,16 +6,17 @@
 package EJB;
 
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
+import javax.persistence.*;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import modelo.Rol;
 import modelo.Organizador;
 
 /**
  *
- * @author Diego
+ * @author mtrasl
  */
 @Stateless
 public class OrganizadorFacade extends AbstractFacade<Organizador> implements OrganizadorFacadeLocal {
@@ -32,19 +33,31 @@ public class OrganizadorFacade extends AbstractFacade<Organizador> implements Or
         super(Organizador.class);
     }
 
+    @EJB
+    private RolFacadeLocal rolEJB;
+
     @Override
     public List<Organizador> findOrganizadorType(char rol) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Rol aux = rolEJB.findRol(rol);
+        String consulta = "FROM organizadores o WHERE o.rol.idRol=:param1";
+        Query query = em.createQuery(consulta);
+        query.setParameter("param1", aux.getIdRol());
+        List<Organizador> resultado = query.getResultList();
+        return resultado; //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Organizador findOrganizador(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String consulta = "FROM organizadores o WHERE o.idOrganizador = :param1";
+        Query query = em.createQuery(consulta);
+        query.setParameter("param1", id);
+        List<Organizador> resultado = query.getResultList();
+        return resultado.get(0); //To change body of generated methods, choose Tools | Templates.    
     }
 
     @Override
     public Organizador verificarOrganizador(Organizador organizador) {
-        String consulta = "FROM Organizador u WHERE o.organizador=:param1 and u.password=:param2";
+        String consulta = "FROM organizadores o WHERE o.user=:param1 and o.password=:param2";
         Query query = em.createQuery(consulta);
         query.setParameter("param1", organizador.getNombreUsuario());
         query.setParameter("param2", organizador.getPassword());
@@ -54,12 +67,13 @@ public class OrganizadorFacade extends AbstractFacade<Organizador> implements Or
             return resultado.get(0); // Devuelve el primer resultado encontrado
         } else {
             return null; // Devuelve null si no hay coincidencia en base de datos
-        } 
+        } //To change body of generated methods, choose Tools | Templates.
     } 
 
     @Override
     public Organizador obtenerOrganizadorActual() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Organizador organizador = (Organizador) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("organizador");
+        return organizador;    
     }
 
 }

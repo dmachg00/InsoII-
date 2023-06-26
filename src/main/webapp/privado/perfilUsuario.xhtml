@@ -5,12 +5,124 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+
+HACERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
     <body>
-        <div>TODO write content</div>
+
+        <ui:composition template="./../WEB-INF/template/plantillaPublicaciones.xhtml">
+
+            <ui:define name="content">
+                <h:form id="frmPrincipal">
+                    <p:dataTable var="asignatura" value="#{alumnoController.asignaturas}">
+                        <p:column headerText="Nombre">
+                            #{asignatura.nombre}
+                        </p:column>
+                        <p:column headerText="Apuntes">
+                            <p:commandButton value="Apuntes"  actionListener="#{alumnoController.abrirDialogoApuntes(asignatura)}" update="apuntesForm" 
+                                             oncomplete="PF('wdialogoApuntes').show();">
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Calificaciones">
+                            <p:commandButton value="Calificaciones" actionListener="#{alumnoController.obtenerCalificaciones(asignatura)}" update="calificacionesForm" 
+                                             oncomplete="PF('wdialogoCalificaciones').show();">
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+
+                <h:form id="apuntesForm">
+                    <p:dialog id="dialogoApuntes" widgetVar="wdialogoApuntes" modal="true" closeOnEscape="true"
+                              draggable="false" resizable="false" header="Apuntes">
+                        <p:dataTable var="apunte" value="#{alumnoController.apuntes}">
+                            <p:column headerText="Título">
+                                #{apunte.descripcion} 
+                            </p:column>
+                            <p:column headerText="Contenido">
+                                #{apunte.contenido} 
+                            </p:column>
+                            <p:column headerText="Fecha de Creación">
+                                #{apunte.fecha} 
+                            </p:column>
+                            <p:column headerText="Modificar">
+                                <p:commandButton value="Modificar" icon="pi pi-pencil" 
+                                                 oncomplete=" PF('wdialogoModificacionApunte').show();"
+                                                 update="modificacionApunteForm"  actionListener="#{alumnoController.abrirDialogoModificarApuntes(apunte)}" />
+                            </p:column>
+                            <p:column headerText="Eliminar">
+                                <p:commandButton value="Eliminar" icon="pi pi-trash" 
+                                                 update="apuntesForm"  actionListener="#{alumnoController.setApunteSeleccionado(apunte)}" action="#{alumnoController.eliminarApunte()}" />
+                            </p:column>
+                        </p:dataTable>
+                        <p:panelGrid columns="2">
+                            <h:outputLabel for="tituloApunte" value="Título del Apunte:" />
+                            <p:inputText id="tituloApunte" value="#{alumnoController.nuevoApunte.descripcion}" />
+
+                            <h:outputLabel for="contenidoApunte" value="Contenido del Apunte:" />
+                            <p:inputTextarea id="contenidoApunte" value="#{alumnoController.nuevoApunte.contenido}" rows="6" />
+
+                            <p:commandButton value="Guardar" actionListener="#{alumnoController.guardarApunte}" update="apuntesForm"/>
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="calificacionesForm">
+                    <p:dialog id="dialogoCalificaciones" widgetVar="wdialogoCalificaciones" modal="true" closeOnEscape="true"
+                              draggable="false" resizable="false" header="Calificaciones">
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Calificaciones de Tareas" style="font-weight:bold" />
+                            <h:outputText value="Calificaciones de Exámenes" style="font-weight:bold" />
+
+                            <p:dataTable var="calificacionTarea" value="#{alumnoController.calificacionesTareas}">
+                                <!-- Columnas de la tabla de calificaciones de tareas -->
+                                <p:column headerText="Tarea">
+                                    #{calificacionTarea.tarea.titulo}
+                                </p:column>
+                                <p:column headerText="Calificación">
+                                    #{calificacionTarea.calificacion}
+                                </p:column>
+                            </p:dataTable>
+
+                            <p:dataTable var="calificacionExamen" value="#{alumnoController.calificacionesExamenes}">
+                                <!-- Columnas de la tabla de calificaciones de exámenes -->
+                                <p:column headerText="Examen">
+                                    #{calificacionExamen.examen.titulo}
+                                </p:column>
+                                <p:column headerText="Calificación">
+                                    #{calificacionExamen.calificacion}
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+
+
+                <h:form id="modificacionApunteForm">
+                    <p:dialog id="dialogoModificacionApunte" widgetVar="wdialogoModificacionApunte" modal="true" closeOnEscape="true"
+                              draggable="false" resizable="false" header="Modificar Apunte">
+                        <p:panelGrid columns="2">
+                            <h:outputLabel for="tituloApunteModificado" value="Título del Apunte:" />
+                            <p:inputText id="tituloApunteModificado" value="#{alumnoController.apunteSeleccionado.descripcion}" />
+
+                            <h:outputLabel for="contenidoApunteModificado" value="Contenido del Apunte:" />
+                            <p:inputTextarea id="contenidoApunteModificado" value="#{alumnoController.apunteSeleccionado.contenido}" rows="6" />
+
+                            <p:commandButton value="Guardar" actionListener="#{alumnoController.modificarApunte}" update="apuntesForm"
+                                             oncomplete="PF('wdialogoModificacionApunte').hide();" />
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
     </body>
 </html>

@@ -8,6 +8,8 @@ package controlador;
 import EJB.OrganizadorFacadeLocal;
 import EJB.RolFacadeLocal;
 import EJB.UsuarioFacadeLocal;
+import java.util.Date;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.PostConstruct;
@@ -16,6 +18,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.*;
+import javax.inject.Named;
 import modelo.Organizador;
 import modelo.Persona;
 import modelo.Rol;
@@ -23,22 +26,23 @@ import modelo.Usuario;
 
 /**
  *
- * @author Diego
+ * @author mtrasl
  */
 @Named
 @ViewScoped
-public class RegistroController {
+public class RegisterController implements Serializable{
        
     @EJB
     private UsuarioFacadeLocal usuarioEJB;
     private OrganizadorFacadeLocal organizadorEJB;
+    private Persona persona;
     private Organizador organizador;
     private Usuario usuario;
-    private Persona persona;
     private String descripcion;
     private String password1;
     private String password2;
     private List<Rol> roles;
+    @EJB
     private RolFacadeLocal rolEJB;
     
     @PostConstruct
@@ -51,11 +55,10 @@ public class RegistroController {
         usuario.setPersona(persona);
     }
     
-    
     public String insertarUsuario() {
         String aux = "";
         try {
-            
+            // Obtener IdRol correspondiente a tipo de usuario "U"
             roles = rolEJB.findAllRoles();
 
             for (int i = 0; i < roles.size(); i++) {
@@ -78,7 +81,7 @@ public class RegistroController {
                     aux = "/index.xhtml?faces-redirect=true";
                 } else {
                     // Usuario no existe en base de datos, navegar a "permisosinsuficientes.xhtml"
-                    aux = "publico/registerUsuario.xhtml?faces-redirect=true";
+                    aux = "publico/registroUsuario.xhtml?faces-redirect=true";
                 }
             }
         } catch (Exception e) {
@@ -229,7 +232,7 @@ public class RegistroController {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final RegistroController other = (RegistroController) obj;
+        final RegisterController other = (RegisterController) obj;
         if (!Objects.equals(this.descripcion, other.descripcion)) {
             return false;
         }

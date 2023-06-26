@@ -79,8 +79,6 @@ public class Evento implements Serializable{
         this.direccion = direccion;
     }
 
-
-    
     public int getTelefono() {
         return telefono;
     }

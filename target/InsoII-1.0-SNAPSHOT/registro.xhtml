@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+xhtml<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -6,43 +6,104 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
-    <title>Registro de Sesión</title>
+    <title>Registro de Usuario</title>
 </h:head>
-<h:body>
-    <h:form>
-        <p:panelGrid columns="2" style="margin-top: 50px;">
-            <p:outputLabel for="nombre" value="Nombre" />
-            <p:inputText id="nombre" required="true" />
+<style>
+        body {
 
-            <p:outputLabel for="apellidos" value="Apellidos" />
-            <p:inputText id="apellidos" required="true" />
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-panel {
+            color: black;
+            padding: 50px;
+            text-align: center;
 
-            <p:outputLabel for="dni" value="DNI" />
-            <p:inputText id="dni" required="true" />
+        }
+        .button {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: black;
+            border: none;
+            color: white;
+            text-align: center;
+            font-size: 10px;
+            padding: 2px;
+            width: 75px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
 
-            <p:outputLabel for="telefono" value="Teléfono" />
-            <p:inputText id="telefono" required="true" />
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
 
-            <p:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento" />
-            <p:calendar id="fechaNacimiento" required="true" />
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
 
-            <p:outputLabel for="usuario" value="Nombre de Usuario" />
-            <p:inputText id="usuario" required="true" />
+        .button:hover span {
+            padding-right: 25px;
+        }
 
-            <p:outputLabel for="email" value="Correo Electrónico" />
-            <p:inputText id="email" required="true" />
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+    </style>
+    <h:body>
+        <h:form>
+            <div class="registro-panel">
+                <p:panelGrid columns="2" style="margin-top: 50px;">
 
-            <p:outputLabel for="contrasena" value="Contraseña" />
-            <p:password id="contrasena" required="true" />
+                    <p:outputLabel for="nombre" value="Nombre" />
+                    <p:inputText id="nombre" required="true" />
 
-            <p:outputLabel for="rol" value="Rol" />
-            <p:selectOneMenu id="rol" required="true">
-                <f:selectItem itemLabel="Usuario" itemValue="usuario" />
-                <f:selectItem itemLabel="Organizador" itemValue="organizador" />
-            </p:selectOneMenu>
+                    <p:outputLabel for="apellidos" value="Apellidos" />
+                    <p:inputText id="apellidos" required="true" />
 
-            <p:commandButton value="Registrarse" />
-        </p:panelGrid>
-    </h:form>
-</h:body>
+                    <p:outputLabel for="dni" value="DNI" />
+                    <p:inputText id="dni" required="true" />
+
+                    <p:outputLabel for="telefono" value="Teléfono" />
+                    <p:inputText id="telefono" required="true" />
+
+                    <p:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento" />
+                    <p:calendar id="fechaNacimiento" required="true" />
+
+                    <p:outputLabel for="usuario" value="Nombre de Usuario" />
+                    <p:inputText id="usuario" required="true" />
+
+                    <p:outputLabel for="email" value="Correo Electrónico" />
+                    <p:inputText id="email" required="true" />
+
+                    <p:outputLabel for="contrasena" value="Contraseña" />
+                    <p:password id="contrasena" required="true" />
+
+                    <p:outputLabel for="rol" value="Rol" />
+                    <p:selectOneMenu id="rol" required="true">
+                        <f:selectItem itemLabel="Usuario" itemValue="usuario" 
+                                      value="#{RegisterController.insertarUsuario()}"/>
+                        <f:selectItem itemLabel="Organizador" itemValue="organizador" 
+                                      value="#{RegisterController.insertarOrganizador()}"/>
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Registrarse" />
+                </p:panelGrid>
+            </div>
+        </h:form>
+    </h:body>
 </html>
+
