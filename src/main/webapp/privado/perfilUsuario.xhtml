@@ -21,9 +21,9 @@ HACERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 
             <ui:define name="content">
                 <h:form id="frmPrincipal">
-                    <p:dataTable var="asignatura" value="#{alumnoController.asignaturas}">
+                    <p:dataTable var="asignatura" value="#{userController.gustos}">
                         <p:column headerText="Nombre">
-                            #{asignatura.nombre}
+                            #{gusto.nombre}
                         </p:column>
                         <p:column headerText="Apuntes">
                             <p:commandButton value="Apuntes"  actionListener="#{alumnoController.abrirDialogoApuntes(asignatura)}" update="apuntesForm" 

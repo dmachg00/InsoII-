@@ -86,7 +86,4 @@ public class Gusto implements Serializable{
         }
         return true;
     }
-
-    
-
 }

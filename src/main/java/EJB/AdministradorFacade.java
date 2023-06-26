@@ -11,6 +11,9 @@ import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
 import javax.persistence.*;
 import javax.persistence.PersistenceContext;
+import modelo.Rol;
+import modelo.Usuario;
+import modelo.Organizador;
 import modelo.Administrador;
 
 /**

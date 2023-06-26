@@ -49,7 +49,7 @@ public class RolFacade extends AbstractFacade<Rol> implements RolFacadeLocal {
 
     @Override
     public Rol findRol(char tipo) {
-        Query query = em.createQuery("SELECT r FROM Rol r WHERE r.tipoUsuario = :tipo");
+        Query query = em.createQuery("SELECT r FROM Rol r WHERE r.TipoUsuario = :tipo");
         query.setParameter("tipo", tipo);
         List<Rol> roles = query.getResultList();
         if (!roles.isEmpty()) {
