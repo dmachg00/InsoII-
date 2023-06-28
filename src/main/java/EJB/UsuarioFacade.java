@@ -13,10 +13,11 @@ import javax.persistence.*;
 import javax.persistence.PersistenceContext;
 import modelo.Rol;
 import modelo.Usuario;
+import modelo.Evento;
 
 /**
  *
- * @author Diego
+ * @author mtrasl
  */
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFacadeLocal {
@@ -31,7 +32,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     
     @EJB
     private RolFacadeLocal rolEJB;
-
+            
     public UsuarioFacade() {
         super(Usuario.class);
     }
@@ -45,7 +46,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         List<Usuario> resultado = query.getResultList();
         return resultado; //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public Usuario findUsuario(int id) {
         String consulta = "FROM Usuario u WHERE u.idUsuario = :param1";
@@ -75,5 +76,73 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         return usuario;
     } //To change body of generated methods, choose Tools | Templates.
+    
+    //@Override
+    public void agregarUsuarioEvento(List<Usuario> usuarios, int idEvento) {
+        try {
+            // Obtener la entidad Evento por su ID
+            Evento evento = em.find(Evento.class, idEvento);
+
+            if (evento != null) {
+                for (Usuario user : usuarios) {
+                    // Obtener la entidad Usuario por su ID
+                    Usuario usuario = em.find(Usuario.class, user.getIdUsuario());
+
+                    if (usuario != null) {
+                        // Añadir el evento a la lista de eventos del usuario
+                        List<Evento> eventosUsuario = usuario.getEventos();
+                        eventosUsuario.add(evento);
+
+                        // Añadir el usuario a la lista de usuarios del evento
+                        List<Usuario> usuariosEvento = evento.getUsuarios();
+                        usuariosEvento.add(usuario);
+
+                        // Actualizar las listas de eventos y usuarios
+                        usuario.setEventos(eventosUsuario);
+                        evento.setUsuarios(usuariosEvento);
+
+                        // Persistir los cambios en la base de datos
+                        em.merge(usuario);
+                        em.merge(evento);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // Manejar la excepción
+            e.printStackTrace();
+        }
+    }
+    
+    //@Override
+    public void eliminarRelacionUsuarioEvento(int idUsuario, int idEvento) {
+        try {
+            // Obtener la entidad Usuario por su ID
+            Usuario usuario = em.find(Usuario.class, idUsuario);
+
+            // Obtener la entidad Evento por su ID
+            Evento evento = em.find(Evento.class, idEvento);
+
+            if (usuario != null && evento != null) {
+                // Eliminar el evento de la lista de eventos del usuario
+                List<Evento> eventosUsuario = usuario.getEventos();
+                eventosUsuario.remove(evento);
+
+                // Eliminar el usuario de la lista de usuarios del evento
+                List<Usuario> usuariosEvento = evento.getUsuarios();
+                usuariosEvento.remove(usuario);
+
+                // Actualizar las listas de eventos y usuarios
+                usuario.setEventos(eventosUsuario);
+                evento.setUsuarios(usuariosEvento);
+
+                // Persistir los cambios en la base de datos
+                em.merge(usuario);
+                em.merge(evento);
+            }
+        } catch (Exception e) {
+            // Manejar la excepción
+            e.printStackTrace();
+        }
+    }
 }
     

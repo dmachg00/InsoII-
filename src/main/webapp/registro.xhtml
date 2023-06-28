@@ -68,12 +68,15 @@
             <div class="registro-panel">
                 <p:panelGrid columns="2" style="margin-top: 50px;">
 
-                    <p:outputLabel for="nombre" value="Nombre" />
-                    <p:inputText id="nombre" required="true" />
+                    <p:outputLabel for="nombreUsuario" value="Nombre de usuario" />
+                    <p:inputText id="nombreUsuario" required="true" />
 
-                    <p:outputLabel for="apellidos" value="Apellidos" />
-                    <p:inputText id="apellidos" required="true" />
-
+                    <p:outputLabel for="apellido1" value="Apellido 1" />
+                    <p:inputText id="apellido1" required="true" />
+                    
+                    <p:outputLabel for="apellido2" value="Apellido 2" />
+                    <p:inputText id="apellido2" required="true" />
+                   
                     <p:outputLabel for="dni" value="DNI" />
                     <p:inputText id="dni" required="true" />
 
@@ -94,11 +97,11 @@
 
                     <p:outputLabel for="rol" value="Rol" />
                     <p:selectOneMenu id="rol" required="true">
-                        <f:selectItem itemLabel="Usuario" itemValue="usuario"/>
-                        <f:selectItem itemLabel="Organizador" itemValue="organizador"/>
+                        <f:selectItem itemLabel="Usuario" itemValue="Usuario"/>
+                        <f:selectItem itemLabel="Organizador" itemValue="Organizador"/>
                     </p:selectOneMenu>
 
-                    <p:commandButton action="#{RegisterController.insertarUsuario()}" value="Registrarse" />
+                    <p:commandButton action="#{registerController.insertar()}" value="Registrarse" />
                 </p:panelGrid>
             </div>
         </h:form>

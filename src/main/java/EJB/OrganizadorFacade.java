@@ -59,8 +59,8 @@ public class OrganizadorFacade extends AbstractFacade<Organizador> implements Or
     public Organizador verificarOrganizador(Organizador organizador) {
         String consulta = "FROM organizadores o WHERE o.user=:param1 and o.password=:param2";
         Query query = em.createQuery(consulta);
-        query.setParameter("param1", organizador.getNombreUsuario());
-        query.setParameter("param2", organizador.getPassword());
+        query.setParameter("param1", organizador.getPersona().getNombre());
+        //query.setParameter("param2", organizador.getPassword());
         List<Organizador> resultado = query.getResultList();
         if (resultado != null && !resultado.isEmpty()) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("organizador", resultado.get(0));

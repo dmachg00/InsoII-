@@ -6,28 +6,33 @@
 package modelo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
  *
- * @author Diego
+ * @author mtrasl
  */
 @Entity
 @Table(name = "eventos")   
 public class Evento implements Serializable{
     
     @Id
+    @Column(name = "IdEvento")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idEvento;
     
@@ -43,9 +48,15 @@ public class Evento implements Serializable{
     @Column(name = "Telefono")
     private int telefono;
     
+    @ManyToMany(mappedBy = "eventos")
+    private List<Usuario> usuarios;
+    
+    @OneToMany(mappedBy = "gustos", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Gusto> gustos;
+    
     @ManyToOne
-    @JoinColumn (name = "idOrganizador")
-    private Organizador organizador;
+    @JoinColumn(name = "IdOrganizador", referencedColumnName = "IdEvento", foreignKey = @ForeignKey(name = "FK_Evento_Usuario"))
+    private Usuario organizador;
 
     public int getIdEvento() {
         return idEvento;
@@ -55,12 +66,12 @@ public class Evento implements Serializable{
         this.idEvento = idEvento;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    public String getNombre() {
+        return nombre;
     }
 
     public String getDescripcion() {
@@ -79,22 +90,40 @@ public class Evento implements Serializable{
         this.direccion = direccion;
     }
 
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
+    
     public int getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
-    }
-
-   public Organizador getOrganizador(){
+    public void setOrganizador (Usuario organizador){
+       this.organizador = organizador;
+   }
+    
+   public Usuario getOrganizador(){
        return organizador;
    }
    
-   public void setOrganizador (Organizador organizador){
-       this.organizador = organizador;
-   }
+   public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+   
+   public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
 
+   public void setGusto(List<Gusto> gusto) {
+        this.gustos = gusto;
+    }
+   
+   public List<Gusto> getGusto() {
+        return gustos;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 3;

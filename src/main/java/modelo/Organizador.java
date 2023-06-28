@@ -10,18 +10,25 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
- * @author Diego
+ * @author mtrasl
  */
-@Entity
+@Embeddable
 @Table(name = "organizadores")
-public class Organizador implements Serializable{
+public class Organizador implements Serializable {
+
+    @EmbeddedId
+    private OrganizadorEventoId id;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idOrganizador;
     @Column(name = "NombreUsuario", unique = true)
     private String nombreUsuario;
     @Column(name = "Email", unique = true)
@@ -33,80 +40,43 @@ public class Organizador implements Serializable{
     private Date ultimaConexion;
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "IdPersona")
-    private Persona persona;
+    
     @ManyToOne
-    @JoinColumn(name = "IdRol")
-    private Rol rol;
-    
+    @JoinColumn(name = "IdRol", referencedColumnName = "IdRol", updatable = false, foreignKey = @ForeignKey(name = "FK_Organizador_IdRol"))
+    private Rol idRol;
 
-    public int getIdUsuario() {
-        return idOrganizador;
+    @ManyToOne
+    @JoinColumn(name = "IdPersona", referencedColumnName = "IdPersona", updatable = false, foreignKey = @ForeignKey(name = "FK_Organizador_IdPersona"))
+    private Persona persona;
+
+    public OrganizadorEventoId getIdOrganizador() {
+        return id;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-    
-    public String getEmail() {
-        return email;
+    public void setIdOrganizador(OrganizadorEventoId id) {
+        this.id = id;
     }
 
-    public String getPassword() {
-        return password;
+    public Rol getRol() {
+        return idRol;
     }
 
-    public Date getUltimaConexion() {
-        return ultimaConexion;
+    public void setRol(Rol rol) {
+        this.idRol = rol;
     }
-
 
     public Persona getPersona() {
         return persona;
     }
 
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idOrganizador = idUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
-    
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setUltimaConexion(Date ultimaConexion) {
-        this.ultimaConexion = ultimaConexion;
-    }
-
-
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 79 * hash + this.idOrganizador;
-        hash = 79 * hash + Objects.hashCode(this.nombreUsuario);
-        hash = 79 * hash + Objects.hashCode(this.email);
-        hash = 79 * hash + Objects.hashCode(this.password);
-        hash = 79 * hash + Objects.hashCode(this.ultimaConexion);
-        hash = 79 * hash + Objects.hashCode(this.persona);
-        hash = 79 * hash + Objects.hashCode(this.rol);
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -122,30 +92,48 @@ public class Organizador implements Serializable{
             return false;
         }
         final Organizador other = (Organizador) obj;
-        if (this.idOrganizador != other.idOrganizador) {
-            return false;
-        }
-        if (!Objects.equals(this.nombreUsuario, other.nombreUsuario)) {
-            return false;
-        }
-        if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        if (!Objects.equals(this.password, other.password)) {
-            return false;
-        }
-        if (!Objects.equals(this.ultimaConexion, other.ultimaConexion)) {
-            return false;
-        }
-        if (!Objects.equals(this.persona, other.persona)) {
-            return false;
-        }
-        if (!Objects.equals(this.rol, other.rol)) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
 
-    
-    
+    public static class OrganizadorEventoId implements Serializable {
+
+        @Column(name = "IdOrganizador")
+        private int idOrganizador;
+
+        public int getIdOrganizador() {
+            return idOrganizador;
+        }
+
+        public void setIdOrganizador(int idOrganizador) {
+            this.idOrganizador = idOrganizador;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 59 * hash + this.idOrganizador;
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final OrganizadorEventoId other = (OrganizadorEventoId) obj;
+            if (this.idOrganizador != other.idOrganizador) {
+                return false;
+            }
+            return true;
+        }
+    }
 }

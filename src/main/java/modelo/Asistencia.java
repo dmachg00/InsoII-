@@ -7,48 +7,47 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Diego
  */
-
-
 @Embeddable
 @Table(name = "asistencia")
 public class Asistencia implements Serializable {
     
     @EmbeddedId
-    private AsistenciaID id;
+    private AsistenciaId id;
     
     @ManyToOne
     @JoinColumn (name ="idEvento", referencedColumnName = "idEvento", foreignKey=@ForeignKey(name = "FK_eventos"))
-    
     private Evento evento;
     
     @ManyToOne
     @JoinColumn (name ="idUsuario", referencedColumnName = "idUsuario", foreignKey=@ForeignKey(name = "FK_asistencia_usuarios"))
-    
     private Usuario usuarios;
     
     
-    public AsistenciaID getId(){
-        return id;
-        
+    public AsistenciaId getId(){
+        return id;      
     }
         
-    public void setId(AsistenciaID id){
+    public void setId(AsistenciaId id){
         this.id=id;
     }
     
     public Evento getEvento(){
-        
         return evento;
     }
     
-    public void setEvento (Evento evento){
-        
+    public void setEvento (Evento evento){ 
        this.evento=evento;
     }
     
@@ -57,7 +56,6 @@ public class Asistencia implements Serializable {
     }
     
     public void setUsuario(Usuario usuario){
-     
         this.usuarios=usuario;
     }
 
@@ -97,7 +95,7 @@ public class Asistencia implements Serializable {
     
     
 
-    public static class AsistenciaID implements Serializable {
+    public static class AsistenciaId implements Serializable {
 
         @Column(name = "idEvento")
         private int idEvento;
@@ -138,7 +136,7 @@ public class Asistencia implements Serializable {
             if (getClass() != obj.getClass()) {
                 return false;
             }
-            final AsistenciaID other = (AsistenciaID) obj;
+            final AsistenciaId other = (AsistenciaId) obj;
             if (this.idEvento != other.idEvento) {
                 return false;
             }
@@ -147,7 +145,6 @@ public class Asistencia implements Serializable {
             }
             return true;
         }
-
     }
 }
     

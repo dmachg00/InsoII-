@@ -34,7 +34,7 @@ public class Administrador implements Serializable{
         return idAdministrador;
     }
 
-    public String getNombreUsuario() {
+    public String getNombreAdministrador() {
         return usuario;
     }
 
@@ -49,7 +49,7 @@ public class Administrador implements Serializable{
     }
 
     public void setIdAdmin(int idAdmin) {
-        this.idAdministrador = idAdministrador;
+        this.idAdministrador = idAdmin;
     }
 
     public void setUsuario(String usuario) {

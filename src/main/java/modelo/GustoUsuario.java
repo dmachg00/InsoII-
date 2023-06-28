@@ -7,10 +7,16 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.*;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.Table;
 
 /**
  *
@@ -19,21 +25,32 @@ import javax.persistence.Id;
 @Entity
 @Table(name = "gustosusuario")
 public class GustoUsuario implements Serializable {
-
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idGustosUsuario;
+    @EmbeddedId
+    private GustoUsuarioId idGustosUsuario;
     
     @ManyToOne
-    @JoinColumn(name = "idUsuario", foreignKey = @ForeignKey(name = "FK_gustosusuario_usuarios"))
+    @MapsId("idUsuario") // Utiliza la propiedad idUsuario de GustoUsuarioId como parte de la clave primaria y clave externa
+    @JoinColumn(name = "idUsuario", referencedColumnName = "IdUsuario", foreignKey = @ForeignKey(name = "FK_gustosusuario_usuarios"))
     private Usuario usuario;
 
-    @ManyToOne
-    @JoinColumn(name = "idGusto", foreignKey = @ForeignKey(name = "FK_gustosusuario_gustos"))
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @MapsId("idGusto")
+    @JoinColumn(name = "idGusto", referencedColumnName = "idGusto", foreignKey = @ForeignKey(name = "FK_gustosusuario_gustos"))
     private Gusto gusto;
+    
+    //@Column(name = "gustoUsuario")
+    private String gustoUsuario;
 
-    public int getIdGustosUsuario() {
+    public String getgustoUsuario() {
+        return gustoUsuario;
+    }
+
+    public void setgustoUsuario(String gustoUsuario) {
+        this.gustoUsuario = gustoUsuario;
+    }
+    
+    public GustoUsuarioId getIdGustosUsuario() {
         return idGustosUsuario;
     }
 
@@ -45,7 +62,7 @@ public class GustoUsuario implements Serializable {
         return gusto;
     }
 
-    public void setIdGustosUsuario(int idGustosUsuario) {
+    public void setIdGustosUsuario(GustoUsuarioId idGustosUsuario) {
         this.idGustosUsuario = idGustosUsuario;
     }
 
@@ -60,7 +77,6 @@ public class GustoUsuario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + this.idGustosUsuario;
         hash = 67 * hash + Objects.hashCode(this.usuario);
         hash = 67 * hash + Objects.hashCode(this.gusto);
         return hash;
@@ -90,4 +106,58 @@ public class GustoUsuario implements Serializable {
         return true;
     }
     
+    @Embeddable
+    public static class GustoUsuarioId implements Serializable {
+
+        @Column(name = "idGustosEvento")
+        private int idGustosEvento;
+
+        @Column(name = "idGustos")
+        private int idGusto;
+
+        public int getIdGustoEventos() {
+            return idGustosEvento;
+        }
+
+        public void setIdGustoEventos(int idGustosEvento) {
+            this.idGustosEvento = idGustosEvento;
+        }
+
+        public int getIdGusto() {
+            return idGusto;
+        }
+
+        public void setIdExamen(int idGusto) {
+            this.idGusto = idGusto;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 59 * hash + this.idGustosEvento;
+            hash = 59 * hash + this.idGusto;
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final GustoUsuarioId other = (GustoUsuarioId) obj;
+            if (this.idGustosEvento != other.idGustosEvento) {
+                return false;
+            }
+            if (this.idGusto != other.idGusto) {
+                return false;
+            }
+            return true;
+        }
+    }
 }

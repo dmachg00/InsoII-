@@ -18,6 +18,8 @@ import modelo.Usuario;
  *
  * @author mtrasl
  */
+@Named
+@RequestScoped
 public class LoginController implements Serializable {
     
     @EJB

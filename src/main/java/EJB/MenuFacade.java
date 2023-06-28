@@ -33,11 +33,12 @@ public class MenuFacade extends AbstractFacade<Menu> implements MenuFacadeLocal 
         super(Menu.class);
     }
     
-    public List<Menu> obtenerMenuUsuario(Usuario usuario) {
+    //@Override
+    public List<Menu> obtenerMenusUsuario(Usuario us) {
         String consulta = "FROM Menu m WHERE m.rol=:param1";
         Query query = em.createQuery(consulta);
-        query.setParameter("param1", usuario.getRol());
+        query.setParameter("param1", us.getRol());
         List<Menu> resultado = query.getResultList();
-        return resultado; // Devuelve el primer resultado encontrado
+        return resultado; 
     }
 }

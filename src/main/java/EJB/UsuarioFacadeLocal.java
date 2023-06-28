@@ -1,3 +1,6 @@
+
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,7 +14,7 @@ import modelo.Usuario;
 
 /**
  *
- * @author Diego
+ * @author mtrasl
  */
 @Local
 public interface UsuarioFacadeLocal {
@@ -38,4 +41,7 @@ public interface UsuarioFacadeLocal {
     
     Usuario obtenerUsuarioActual();
     
+    void agregarUsuarioEvento(List<Usuario> usuarios, int idEvento);
+    
+    void eliminarRelacionUsuarioEvento(int idUsuario, int idEvento);
 }

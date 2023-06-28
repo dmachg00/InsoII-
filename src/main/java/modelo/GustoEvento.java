@@ -7,10 +7,16 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.*;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.Table;
 /**
  *
  * @author mtras
@@ -18,36 +24,49 @@ import javax.persistence.Id;
 @Entity
 @Table(name = "gustosevento")
 public class GustoEvento implements Serializable{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idGustoEvento;
+    
+    @EmbeddedId
+    private GustoEventoId idGustosEvento;
     
     @ManyToOne
-    @JoinColumn(name = "idEventos", foreignKey = @ForeignKey(name = "FK_gustosevento_eventos"))
+    @MapsId("idEventos") // Utiliza la propiedad idEventos de GustoEvento como parte de la clave primaria y clave externa
+    @JoinColumn(name = "idEventos", referencedColumnName = "idEventos", foreignKey = @ForeignKey(name = "FK_gustosevento_eventos"))
     private Evento evento;
 
-    @ManyToOne
-    @JoinColumn(name = "idGusto", foreignKey = @ForeignKey(name = "FK_gustosevento_gustos"))
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @MapsId("idGusto")
+    @JoinColumn(name = "idGusto", referencedColumnName = "idGusto", foreignKey = @ForeignKey(name = "FK_gustosevento_gustos"))
     private Gusto gusto;
+    
+    //@Column(name = "gustoEvento")
+    private String gustoEvento;
 
-    public int getIdGustosEvento() {
-        return idGustoEvento;
+    public String getgustoEvento() {
+        return gustoEvento;
+    }
+
+    public void setgustoEvento(String gustoEvento) {
+        this.gustoEvento = gustoEvento;
+    }
+    
+    public GustoEventoId getIdGustosEvento() {
+        return idGustosEvento;
+    }
+    
+    public void setIdGustosEvento(GustoEventoId idGustosEvento) {
+        this.idGustosEvento = idGustosEvento;
     }
 
     public Evento getEvento() {
         return evento;
     }
 
-    public Gusto getGusto() {
-        return gusto;
-    }
-
-    public void setIdGustosEvento(int idGustosEvento) {
-        this.idGustoEvento = idGustosEvento;
-    }
-
     public void setEvento(Evento evento) {
         this.evento = evento;
+    }
+    
+    public Gusto getGusto() {
+        return gusto;
     }
 
     public void setGusto(Gusto gusto) {
@@ -57,7 +76,6 @@ public class GustoEvento implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + this.idGustoEvento;
         hash = 67 * hash + Objects.hashCode(this.evento);
         hash = 67 * hash + Objects.hashCode(this.gusto);
         return hash;
@@ -75,7 +93,7 @@ public class GustoEvento implements Serializable{
             return false;
         }
         final GustoEvento other = (GustoEvento) obj;
-        if (this.idGustoEvento != other.idGustoEvento) {
+        if (this.idGustosEvento != other.idGustosEvento) {
             return false;
         }
         if (!Objects.equals(this.evento, other.evento)) {
@@ -85,5 +103,60 @@ public class GustoEvento implements Serializable{
             return false;
         }
         return true;
+    }
+    
+    @Embeddable
+    public static class GustoEventoId implements Serializable {
+
+        @Column(name = "idGustosEvento")
+        private int idEventos;
+
+        @Column(name = "idGustos")
+        private int idGusto;
+
+        public int getIdEventos() {
+            return idEventos;
+        }
+
+        public void setIdEventos(int idEvento) {
+            this.idEventos = idEvento;
+        }
+
+        public int getIdGusto() {
+            return idGusto;
+        }
+
+        public void setIdExamen(int idGusto) {
+            this.idGusto = idGusto;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 59 * hash + this.idEventos;
+            hash = 59 * hash + this.idGusto;
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final GustoEventoId other = (GustoEventoId) obj;
+            if (this.idEventos != other.idEventos) {
+                return false;
+            }
+            if (this.idGusto != other.idGusto) {
+                return false;
+            }
+            return true;
+        }
     }
 }

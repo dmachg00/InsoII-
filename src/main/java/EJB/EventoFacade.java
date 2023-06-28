@@ -11,6 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import modelo.Evento;
+import modelo.Usuario;
+import modelo.Gusto;
 
 /**
  *
@@ -47,6 +49,22 @@ public class EventoFacade extends AbstractFacade<Evento> implements EventoFacade
         query.setParameter("param1", tipo);
         List<Evento> resultado = query.getResultList();
         return resultado.get(0); 
+    }
+    
+    public List<Evento> findAllEventsOfOrganizer(Usuario u) {
+        String consulta = " FROM eventos e WHERE e.idOrgnizador =:param1";
+        Query query = em.createQuery(consulta);
+        query.setParameter("param1", u.getIdUsuario());
+        List<Evento> resultado = query.getResultList();
+        return resultado; 
+    }
+    
+    public List<Gusto> findAllGustosEvento(Evento evento) {
+        String consulta = "SELECT e FROM eventos e WHERE e.evento = :evento";
+        Query query = em.createQuery(consulta);
+        query.setParameter("asignatura", evento);
+        List<Gusto> resultado = query.getResultList();
+        return resultado;
     }
     
     @Override

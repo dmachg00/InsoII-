@@ -40,7 +40,6 @@ public class RegisterController implements Serializable{
     private Usuario usuario;
     private String descripcion;
     private String password1;
-    private String password2;
     private List<Rol> roles;
     @EJB
     private RolFacadeLocal rolEJB;
@@ -55,7 +54,7 @@ public class RegisterController implements Serializable{
         usuario.setPersona(persona);
     }
     
-    public String insertarUsuario() {
+    public String insertar() {
         System.out.println("Hola");
         String aux = "";
         try {
@@ -67,22 +66,26 @@ public class RegisterController implements Serializable{
                     usuario.setRol(roles.get(i));
                 }
             }
-            System.out.println("Contraseñas:"+password1+" "+password2);
-            if (password1 == null ? password2 != null : !password1.equals(password2)) {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las contraseñas no coinciden", null);
+            System.out.println("Contraseñas:"+password1);
+            System.out.println(persona.getNombre());
+            
+            if (password1 == null){
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "La contraseña no es correcta", null);
                 FacesContext.getCurrentInstance().addMessage("form:confirmPassword", message);
             } else {
                 usuario.setPassword(password1);
                 usuarioEJB.create(usuario);
+                /*
                 Usuario usuarioExistente = usuarioEJB.verificarUsuario(usuario);
                 
                 if (usuarioExistente != null) {
                     // Usuario existe en base de datos, navegar a "privado/inicio.xhtml"
-                    aux = "/index.xhtml?faces-redirect=true";
+                    aux = "publico/registroExitoso.html?faces-redirect=true";
                 } else {
                     // Usuario no existe en base de datos, navegar a "registroUsuario.html"
-                    aux = "publico/registroUsuario.html?faces-redirect=true";
+                    aux = "publico/registroFallido.html?faces-redirect=true";
                 }
+                */
             }
         } catch (Exception e) {
             System.out.println("Error al insertar el usuario: " + e.getMessage());
@@ -90,41 +93,6 @@ public class RegisterController implements Serializable{
         return aux;
     }
     
-    public String insertarOrganizador() {
-        String aux = "";
-        try {
-            
-            roles = rolEJB.findAllRoles();
-
-            for (int i = 0; i < roles.size(); i++) {
-                if (roles.get(i).getDescripcion().toString().equals("Organizador")) {
-                    usuario.setRol(roles.get(i));
-                }
-            }
-            System.out.println("contraseñas:"+password1+" "+password2);
-            if (password1 == null ? password2 != null : !password1.equals(password2)) {
-
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las contraseñas no coinciden", null);
-                FacesContext.getCurrentInstance().addMessage("form:confirmPassword", message);
-            } else {
-                
-                organizador.setPassword(password1);
-                organizadorEJB.create(organizador);
-                Organizador organizadorExistente = organizadorEJB.verificarOrganizador(organizador);
-                if (organizadorExistente != null) {
-                    // Usuario existe en base de datos, navegar a "privado/inicio.xhtml"
-                    aux = "/index.xhtml?faces-redirect=true"; //Login
-                } else {
-                    // Usuario no existe en base de datos, navegar a "permisosinsuficientes.xhtml"
-                    aux = "publico/registroOrganizador.html?faces-redirect=true"; //Registro
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error al insertar el organizador: " + e.getMessage());
-        }
-        return aux;
-    }
-
     public UsuarioFacadeLocal getUsuarioEJB() {
         return usuarioEJB;
     }
@@ -181,14 +149,6 @@ public class RegisterController implements Serializable{
         this.password1 = password1;
     }
 
-    public String getPassword2() {
-        return password2;
-    }
-
-    public void setPassword2(String password2) {
-        this.password2 = password2;
-    }
-
     public List<Rol> getRoles() {
         return roles;
     }
@@ -215,7 +175,6 @@ public class RegisterController implements Serializable{
         hash = 67 * hash + Objects.hashCode(this.persona);
         hash = 67 * hash + Objects.hashCode(this.descripcion);
         hash = 67 * hash + Objects.hashCode(this.password1);
-        hash = 67 * hash + Objects.hashCode(this.password2);
         hash = 67 * hash + Objects.hashCode(this.roles);
         hash = 67 * hash + Objects.hashCode(this.rolEJB);
         return hash;
@@ -237,9 +196,6 @@ public class RegisterController implements Serializable{
             return false;
         }
         if (!Objects.equals(this.password1, other.password1)) {
-            return false;
-        }
-        if (!Objects.equals(this.password2, other.password2)) {
             return false;
         }
         if (!Objects.equals(this.usuarioEJB, other.usuarioEJB)) {

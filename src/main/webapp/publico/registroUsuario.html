@@ -7,41 +7,42 @@
  
 
     <h:head>
-        <title>Facelet Title</title>
+        <title>Registrar un usuario</title>
     </h:head>
+    
     <h:body>
         <h:form>
-            <h1>Register</h1> 
+            <h1>Registro usuario</h1> 
             <p:messages />
 
             <p:fieldset legend="Datos personales">
                 <p:panelGrid columns="2">
-                    <p:outputLabel for="name" value="Nombre:" />
-                    <p:inputText id="name" required="true"  value="#{altaUsuario.usuario.persona.nombre}">
+                    <p:outputLabel for="nombreUsuario" value="Nombre:" />
+                    <p:inputText id="nombreUsuario" required="true"  value="#{RegisterController.usuario.persona.nombre}">
                         <p:message for="name" />
 
                     </p:inputText>
 
-                    <p:outputLabel for="firstSurname" value="Primer Apellido:" />
-                    <p:inputText id="firstSurname" required="true"  value="#{altaUsuario.usuario.persona.apellido1}">
-                        <p:message for="firstSurname" />
+                    <p:outputLabel for="apellido1" value="Primer Apellido:" />
+                    <p:inputText id="apellido1" required="true"  value="#{RegisterController.usuario.persona.apellido1}">
+                        <p:message for="apellido1" />
                     </p:inputText>
 
 
-                    <p:outputLabel for="secondSurname" value="Segundo Apellido:" />
-                    <p:inputText id="secondSurname" required="true" value="#{altaUsuario.usuario.persona.apellido2}">
-                        <p:message for="secondSurname" />
+                    <p:outputLabel for="apellido2" value="Segundo Apellido:" />
+                    <p:inputText id="apellido2" required="true" value="#{RegisterController.usuario.persona.apellido2}">
+                        <p:message for="apellido2" />
                     </p:inputText>
 
                     <p:outputLabel for="gender" value="Género"/>
-                    <p:selectOneButton id="gender" required="true" value="#{altaUsuario.usuario.persona.sexo}">
+                    <p:selectOneButton id="gender" required="true" value="#{RegisterController.usuario.persona.sexo}">
                         <f:selectItem itemLabel="Hombre" itemValue='M' />
                         <f:selectItem itemLabel="Mujer" itemValue='F' />
                         <p:message for="gender" />
                     </p:selectOneButton>
 
                     <p:outputLabel for="dateOfBirth" value="Fecha de nacimiento:" />
-                    <p:calendar id="dateOfBirth" required="true" value="#{altaUsuario.usuario.persona.fechaNacimiento}">
+                    <p:calendar id="dateOfBirth" required="true" value="#{RegisterController.usuario.persona.fechaNacimiento}">
                         <p:message for="dateOfBirth" />
                     </p:calendar>
 
@@ -50,29 +51,25 @@
 
             <p:fieldset legend="Datos de acceso">
                 <p:panelGrid columns="2">
+                    
                     <p:outputLabel for="email" value="Nombre de Usuario:" />
-                    <p:inputText id="email" required="true" value="#{altaUsuario.usuario.user}">
+                    <p:inputText id="email" required="true" value="#{RegisterController.usuario.user}">
                         <p:message for="email" />
                     </p:inputText>
 
                     <p:outputLabel for="password" value="Contraseña:" />
-                    <p:password id="password" required="true" value="#{altaUsuario.password1}">
+                    <p:password id="password" required="true" value="#{RegisterController.password1}">
                         <p:message for="password" />
                     </p:password>
-                    <p:outputLabel for="confirmPassword" value="Confirmar contraseña:" />
-                    <p:password id="confirmPassword" required="true" value="#{altaUsuario.password2}">
-                        <p:message for="confirmPassword" />
-                    </p:password>
 
-                    <p:outputLabel for="role" value="Rol:" />
-                    <p:outputLabel id="role"  value="Alumno"/>
+                    <p:outputLabel for="rol" value="Rol:" />
+                    <p:outputLabel id="rol"  value="Alumno"/>
 
                 </p:panelGrid>
             </p:fieldset>
             <p>
-                <h:commandButton value="Registrar" action="#{altaUsuario.insertarAlumno()}"/>
+                <h:commandButton value="Registrar" action="#{RegisterController.insertar()}"/>
             </p>
         </h:form>
     </h:body>
-
 </html>

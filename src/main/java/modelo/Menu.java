@@ -77,7 +77,7 @@ public class Menu implements Serializable {
     }
 
     public void setMenuPadre(Menu menuPadre) {
-        this.menu_Padre = menu_Padre;
+        this.menu_Padre = menuPadre;
     }
 
     public String getUrl() {
@@ -132,8 +132,6 @@ public class Menu implements Serializable {
         }
         return true;
     }
-
-    
 
     public enum TipoMenu {
         P,H

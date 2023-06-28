@@ -8,10 +8,12 @@ package EJB;
 import java.util.List;
 import javax.ejb.Local;
 import modelo.Evento;
+import modelo.Gusto;
+import modelo.Usuario;
 
 /**
  *
- * @author Diego
+ * @author mtrasl
  */
 @Local
 public interface EventoFacadeLocal {
@@ -23,6 +25,10 @@ public interface EventoFacadeLocal {
     void remove(Evento evento);
 
     Evento find(Object id);
+    
+    List<Evento> findAllEventsOfOrganizer(Usuario u);
+    
+    List<Gusto> findAllGustosEvento(Evento evento);
 
     List<Evento> findAll();
 
